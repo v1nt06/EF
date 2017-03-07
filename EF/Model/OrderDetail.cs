@@ -7,7 +7,7 @@ namespace EF.Model
     using System.Data.Entity.Spatial;
 
     [Table("Order Details")]
-    public partial class Order_Detail
+    public partial class OrderDetail
     {
         [Key]
         [Column(Order = 0)]

@@ -53,7 +53,7 @@
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Model.cs" />
     <Compile Include="Model\Order.cs" />
-    <Compile Include="Model\Order_Detail.cs" />
+    <Compile Include="Model\OrderDetail.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Region.cs" />
     <Compile Include="Model\Shipper.cs" />
