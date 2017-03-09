@@ -1,10 +1,8 @@
 namespace EF.Model
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class Product
     {
@@ -14,7 +12,8 @@ namespace EF.Model
             Order_Details = new HashSet<OrderDetail>();
         }
 
-        public int ProductID { get; set; }
+        [Column("ProductID")]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(40)]

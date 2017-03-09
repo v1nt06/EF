@@ -4,9 +4,8 @@ namespace EF.Model
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
-    public partial class Employee
+    public class Employee
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
@@ -16,7 +15,8 @@ namespace EF.Model
             Territories = new HashSet<Territory>();
         }
 
-        public int EmployeeID { get; set; }
+        [Column("EmployeeID")]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(20)]

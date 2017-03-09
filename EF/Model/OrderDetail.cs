@@ -12,7 +12,7 @@ namespace EF.Model
         [Key]
         [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
 
         [Key]
         [Column(Order = 1)]

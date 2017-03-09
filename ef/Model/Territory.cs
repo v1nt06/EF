@@ -14,8 +14,9 @@ namespace EF.Model
             Employees = new HashSet<Employee>();
         }
 
+        [Column("TerritoryID")]
         [StringLength(20)]
-        public string TerritoryID { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [StringLength(50)]

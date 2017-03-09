@@ -14,7 +14,8 @@ namespace EF.Model
             Products = new HashSet<Product>();
         }
 
-        public int CategoryID { get; set; }
+        [Column("CategoryID")]
+        public int Id { get; set; }
 
         [Required]
         [StringLength(15)]
