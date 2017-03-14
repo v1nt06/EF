@@ -47,7 +47,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201703140758374_Version_1.cs" />
+    <Compile Include="Migrations\201703140758374_Version_1.Designer.cs">
+      <DependentUpon>201703140758374_Version_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703140814280_Version_1.1.cs" />
+    <Compile Include="Migrations\201703140814280_Version_1.1.Designer.cs">
+      <DependentUpon>201703140814280_Version_1.1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201703140821541_Version_1.3.cs" />
+    <Compile Include="Migrations\201703140821541_Version_1.3.Designer.cs">
+      <DependentUpon>201703140821541_Version_1.3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\CreditCard.cs" />
     <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\CustomerDemographic.cs" />
     <Compile Include="Model\Employee.cs" />
@@ -61,10 +75,20 @@
     <Compile Include="Model\Territory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201703140758374_Version_1.resx">
+      <DependentUpon>201703140758374_Version_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703140814280_Version_1.1.resx">
+      <DependentUpon>201703140814280_Version_1.1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201703140821541_Version_1.3.resx">
+      <DependentUpon>201703140821541_Version_1.3.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
