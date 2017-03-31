@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using EF.Model;
+using EF.TestModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace EF.Tests
@@ -16,7 +16,7 @@ namespace EF.Tests
         [TestMethod]
         public void GetProductListWithCategoryAndSupplier()
         {
-            using (var db = new Model.Model())
+            using (var db = new TestModel.TestModel())
             {
                 var products = db.Products;
 
@@ -41,7 +41,7 @@ namespace EF.Tests
         [TestMethod]
         public void GetOrdersByCategory()
         {
-            using (var db = new Model.Model())
+            using (var db = new TestModel.TestModel())
             {
                 var beveragesCategory = db.Categories.First(c => c.CategoryName == "Beverages");
                 var orderDetails = db.OrderDetails;
@@ -74,7 +74,7 @@ namespace EF.Tests
         [TestMethod]
         public void GetEmployeesWithRegions()
         {
-            using (var db = new Model.Model())
+            using (var db = new TestModel.TestModel())
             {
                 var employees = db.Employees;
 
@@ -103,7 +103,7 @@ namespace EF.Tests
         [TestMethod]
         public void GetCountOfEmployeesByRegion()
         {
-            using (var db = new Model.Model())
+            using (var db = new TestModel.TestModel())
             {
                 var regions = db.Regions;
 
@@ -127,7 +127,7 @@ namespace EF.Tests
         [TestMethod]
         public void GetSuppliersStatsOfEmployees()
         {
-            using (var db = new Model.Model())
+            using (var db = new TestModel.TestModel())
             {
                 var orders = db.Orders;
                 // И здесь тоже не понял почему без ToList() не работает.
@@ -157,7 +157,7 @@ namespace EF.Tests
         [TestMethod]
         public void AddNewEmployeeWithTerritories()
         {
-            using (var db = new Model.Model())
+            using (var db = new TestModel.TestModel())
             {
                 var employee = db.Employees.Create();
                 var territories = db.Territories;
@@ -180,7 +180,7 @@ namespace EF.Tests
         [TestMethod]
         public void ChangeCategoryOfProduct()
         {
-            using (var db = new Model.Model())
+            using (var db = new TestModel.TestModel())
             {
                 var chai = db.Products.First(p => p.Id == 1);
                 var seafoodCategory = db.Categories.First(c => c.Id == 8);
@@ -206,7 +206,7 @@ namespace EF.Tests
         [TestMethod]
         public void AddNewProducts()
         {
-            using (var db = new Model.Model())
+            using (var db = new TestModel.TestModel())
             {
                 // Product without new supplier and category.
                 var product1 = db.Products.Create();
@@ -241,7 +241,7 @@ namespace EF.Tests
         [ClassCleanup]
         public static void Cleanup()
         {
-            using (var db = new Model.Model())
+            using (var db = new TestModel.TestModel())
             {
                 db.Products.RemoveRange(db.Products.Where(p => p.ProductName == "Milk"
                                                                || p.ProductName == "Chicken eggs"));
