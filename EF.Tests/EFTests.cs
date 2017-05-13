@@ -45,9 +45,7 @@ namespace EF.Tests
             {
                 var beveragesCategory = db.Categories.First(c => c.CategoryName == "Beverages");
                 var orderDetails = db.OrderDetails;
-                // Не понял почему у меня тут возникало исключение без перевода в List.
-                // Можешь мне это объяснить?
-                var orderInfos = orderDetails
+                var orderInfoGroups = orderDetails
                     .ToList()
                     .Where(d => d.Product.Category == beveragesCategory)
                     .Select(i => new
@@ -57,12 +55,18 @@ namespace EF.Tests
                         i.UnitPrice,
                         i.Quantity,
                         i.Discount,
-                        i.Order.Customer.CompanyName
-                    });
+                        i.Order.Customer.CompanyName,
+                        i.Product.Category
+                    })
+                    .GroupBy(i => i.OrderId);
 
-                foreach (var orderInfo in orderInfos)
+                foreach (var orderInfoGroup in orderInfoGroups)
                 {
-                    Console.WriteLine(orderInfo);
+                    Console.WriteLine(orderInfoGroup.Key);
+                    foreach (var orderInfo in orderInfoGroup)
+                    {
+                        Console.WriteLine($"\t{orderInfo}");
+                    }
                 }
             }
         }
@@ -130,7 +134,6 @@ namespace EF.Tests
             using (var db = new TestModel.TestModel())
             {
                 var orders = db.Orders;
-                // И здесь тоже не понял почему без ToList() не работает.
                 var supplierStats = orders.ToList()
                     .GroupBy(o => o.Employee)
                     .Select(g => new
@@ -210,17 +213,17 @@ namespace EF.Tests
             {
                 // Product without new supplier and category.
                 var product1 = db.Products.Create();
+                var product1Category = "Beverages";
+                var product1Supplier = "Exotic Liquids";
                 product1.ProductName = "Milk";
-                product1.Supplier = db.Suppliers.First();
-                product1.Category = db.Categories.First();
+                AddProduct(product1, product1Category, product1Supplier, db);
 
                 // Product with new supplier and category.
                 var product2 = db.Products.Create();
                 product2.ProductName = "Chicken eggs";
-                product2.Supplier = db.Suppliers.Create();
-                product2.Supplier.CompanyName = "Test company";
-                product2.Category = db.Categories.Create();
-                product2.Category.CategoryName = "Animal origin";
+                var product2Category = "Animal origin";
+                var product2Supplier = "Test company";
+                AddProduct(product2, product2Category, product2Supplier, db);
 
                 var products = new List<Product> { product1, product2 };
 
@@ -229,13 +232,27 @@ namespace EF.Tests
             }
         }
 
-        /// <summary>
-        /// Demo for Task 3 - Issue 4.
-        /// </summary>
-        [TestMethod]
-        public void ReplaceProductInNotShippedOrder()
+        private void AddProduct(Product product, string category, string supplier, TestModel.TestModel db)
         {
-            // Не понял как выполнить это задание, похоже тут кривая структура БД для таких операций.
+            if (db.Categories.Any(c => c.CategoryName == category))
+            {
+                product.Category = db.Categories.First(c => c.CategoryName == category);
+            }
+            else
+            {
+                product.Category = db.Categories.Create();
+                product.Category.CategoryName = category;
+            }
+
+            if (db.Suppliers.Any(s => s.CompanyName == supplier))
+            {
+                product.Supplier = db.Suppliers.First(s => s.CompanyName == supplier);
+            }
+            else
+            {
+                product.Supplier = db.Suppliers.Create();
+                product.Supplier.CompanyName = supplier;
+            }
         }
 
         [ClassCleanup]
@@ -244,7 +261,8 @@ namespace EF.Tests
             using (var db = new TestModel.TestModel())
             {
                 db.Products.RemoveRange(db.Products.Where(p => p.ProductName == "Milk"
-                                                               || p.ProductName == "Chicken eggs"));
+                                                               || p.ProductName == "Chicken eggs"
+                                                               || p.ProductName == "Cucumber"));
                 db.Categories.RemoveRange(db.Categories.Where(c => c.CategoryName == "Animal origin"));
                 db.Suppliers.RemoveRange(db.Suppliers.Where(s => s.CompanyName == "Test company"));
                 db.SaveChanges();
